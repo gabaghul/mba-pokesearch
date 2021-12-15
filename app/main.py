@@ -2,7 +2,7 @@
 from flask import Flask
 import pytesseract as ocr
 import numpy as np
-import cv2
+# import cv2
 import pandas as pd
 import requests
 from flask import request
