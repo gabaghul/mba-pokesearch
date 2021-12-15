@@ -14,7 +14,7 @@ from io import BytesIO
 
 
 app = Flask(__name__)
-csv_path = '../csv/pokemon.csv'
+csv_path = 'csv/pokemon.csv'
 
 api_poketcg_root = 'https://api.pokemontcg.io/v2/cards'
 api_pokeapi_root = 'https://pokeapi.co/api/v2/pokemon'
