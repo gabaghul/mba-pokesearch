@@ -38,13 +38,14 @@ def search():
 
     pokename, api_pokeapi_path, parsed = "","",""
 
+    response = "couldnt find pokemon"
+
     for name in pokenames:
         if name in extractedInformation:
             pokename = name.lower()
             break
     if len(pokename) > 0:
         api_pokeapi_path=f'{api_pokeapi_root}/{pokename}'
-        print(api_pokeapi_path)
         payload={}
         headers = {'X-Api-Key':x_api_key}
 
