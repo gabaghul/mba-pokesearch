@@ -20,6 +20,9 @@ api_poketcg_root = 'https://api.pokemontcg.io/v2/cards'
 api_pokeapi_root = 'https://pokeapi.co/api/v2/pokemon'
 x_api_key = '40616fa2-07af-49f7-aa06-3f87e21f50bf'
 
+@app.route('/', methods=['POST'])
+def hello():
+    return "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 @app.route('/search', methods=['POST'])
 def search():
