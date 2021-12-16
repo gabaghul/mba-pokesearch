@@ -11,9 +11,12 @@ import json
 from PIL import Image
 import urllib.request
 from io import BytesIO
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 csv_path = 'csv/pokemon.csv'
 
 api_poketcg_root = 'https://api.pokemontcg.io/v2/cards'
@@ -21,10 +24,12 @@ api_pokeapi_root = 'https://pokeapi.co/api/v2/pokemon'
 x_api_key = '40616fa2-07af-49f7-aa06-3f87e21f50bf'
 
 @app.route('/', methods=['GET'])
+@cross_origin()
 def hello():
     return f'<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">How i did this</a>'
 
 @app.route('/search', methods=['POST'])
+@cross_origin()
 def search():
     csv = pd.read_csv(csv_path)
     pokenames = csv.Name
