@@ -31,7 +31,7 @@ def hello():
 @app.route('/search', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def search():
-    if request.method == "POST"
+    if request.method == "POST":
         csv = pd.read_csv(csv_path)
         pokenames = csv.Name
 
