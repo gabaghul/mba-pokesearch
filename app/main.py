@@ -28,49 +28,57 @@ x_api_key = '40616fa2-07af-49f7-aa06-3f87e21f50bf'
 def hello():
     return f'<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">How i did this</a>'
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def search():
-    csv = pd.read_csv(csv_path)
-    pokenames = csv.Name
+    if request.method == "POST"
+        csv = pd.read_csv(csv_path)
+        pokenames = csv.Name
 
-    img_input = request.get_json().get('img')
+        img_input = request.get_json().get('img')
 
-    urllib.request.urlretrieve(img_input, "poke.png")
-    img = Image.open("poke.png")
+        urllib.request.urlretrieve(img_input, "poke.png")
+        img = Image.open("poke.png")
 
-    extractedInformation = ocr.image_to_string(img, config='--psm 12')
+        extractedInformation = ocr.image_to_string(img, config='--psm 12')
 
-    pokename, api_pokeapi_path, parsed = "","",""
+        pokename, api_pokeapi_path, parsed = "","",""
 
-    response = "couldnt find pokemon"
+        response = "couldnt find pokemon"
 
-    for name in pokenames:
-        if name in extractedInformation:
-            pokename = name.lower()
-            break
-    if len(pokename) > 0:
-        api_pokeapi_path=f'{api_pokeapi_root}/{pokename}'
-        payload={}
-        headers = {'X-Api-Key':x_api_key}
+        for name in pokenames:
+            if name in extractedInformation:
+                pokename = name.lower()
+                break
+        if len(pokename) > 0:
+            api_pokeapi_path=f'{api_pokeapi_root}/{pokename}'
+            payload={}
+            headers = {'X-Api-Key':x_api_key}
 
-        response = requests.request("GET", api_pokeapi_path, headers=headers, data=payload)
+            response = requests.request("GET", api_pokeapi_path, headers=headers, data=payload)
 
-        parsed = json.loads(response.text)
-        # types = todos['types']
-        # status = todos['stats']
-        poketypes = []
-        stats = []
-        for poketype in parsed['types']:
-            poketypes.append(poketype['type']['name'])
+            parsed = json.loads(response.text)
+            # types = todos['types']
+            # status = todos['stats']
+            poketypes = []
+            stats = []
+            for poketype in parsed['types']:
+                poketypes.append(poketype['type']['name'])
 
-        for stat in parsed['stats']:
-            stats.append({
-                "name": stat['stat']['name'],
-                "value": stat['base_stat']
-            })
-        response = {
-            "name": pokename,
-            "types" : poketypes,
-            "stats" : stats
-        }
-    return response
+            for stat in parsed['stats']:
+                stats.append({
+                    "name": stat['stat']['name'],
+                    "value": stat['base_stat']
+                })
+            response = {
+                "name": pokename,
+                "types" : poketypes,
+                "stats" : stats
+            }
+        return response
+    # if request.method == "OPTIONS":
+    #     response = make_response()
+    #     response.headers.add("Access-Control-Allow-Origin", "*")
+    #     response.headers.add('Access-Control-Allow-Headers', "*")
+    #     response.headers.add('Access-Control-Allow-Methods', "*")
+    #     return response
