@@ -44,7 +44,7 @@ def search():
 
         pokename, api_pokeapi_path, parsed = "","",""
 
-        response = "couldnt find pokemon"
+        response = {"msg":"couldnt find pokemon"}
 
         for name in pokenames:
             if name in extractedInformation:
